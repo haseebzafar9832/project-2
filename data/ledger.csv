@@ -1,0 +1,10 @@
+id,date,type,category,amount,note
+1,2026-07-01,IN,Consulting,4200,July retainers
+2,2026-07-04,EX,Software,49,Design tools
+3,2026-07-12,EX,Office,186.4,Paper and toner
+4,2026-08-01,IN,Consulting,3900,August retainers
+5,2026-08-08,EX,Travel,214.75,Client visit
+6,2026-08-20,EX,Software,49,Design tools
+7,2026-09-01,IN,Consulting,4100,September retainers
+8,2026-09-09,EX,Office,72.3,Supplies
+9,2026-09-18,EX,Marketing,160,Listing refresh

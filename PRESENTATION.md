@@ -1,6 +1,6 @@
 # FlowDesk — short presentation script
 
-Use this as a 5–8 minute walk-through. Compile first so the preprocessor message is on screen.
+Use this as a 5–8 minute walk-through of the official brief. Compile first so the preprocessor message is on screen.
 
 ```bash
 make clean && make
@@ -13,7 +13,7 @@ While Clang runs, point at this line in the compile log:
 warning: Preprocessor: compiling FlowDesk 1.0.0 (color UI)
 ```
 
-That comes from `#pragma message` in `include/config.h`. It proves the preprocessor ran before the compiler built the programme.
+That comes from `#pragma message` in `include/config.h`. It proves the preprocessor ran **before** the compiler built the programme (Step 3).
 
 ---
 
@@ -23,22 +23,38 @@ C is small and fast, but large programmes are hard to keep tidy. FlowDesk is spl
 
 ## 2. Why this programme (Step 2)
 
-It is an office tool, not a toy menu. It also includes a **model projection**: the next 1–36 months under optimistic, base, and cautious expense bands. Optional 3% annual interest applies only to a positive balance.
+The brief allows practical office use, model projections, or a game. This one does the first two:
 
-## 3. Two AI tools (Step 3)
+- **Office ledger** — add, view, search, edit, delete, category totals, save, load.
+- **Model projection** — the next 1–36 months under optimistic, base, and cautious expense bands. Optional 3% annual interest applies only to a positive balance.
 
-- **Cursor** wrote and compiled the code.
-- **ChatGPT** reviewed the projection bands and the interest rule.
+## 3. Build and preprocessor (Step 3)
 
-Details and prompts: `AI_TOOLS.md`.
+Original programme (no borrowed source). Preprocessor directives are in `include/config.h` and run before compiling:
+
+| Directive | What it does here |
+| --- | --- |
+| `#ifndef` / `#define` / `#endif` | Header guard |
+| `#define` | Title, version, file path, record cap, scenario bands |
+| `#if` / `#else` | Windows `cls` vs Mac/Linux clear |
+| `#ifdef FLOWDESK_COLOR` | Colour UI when the Makefile passes `-DFLOWDESK_COLOR` |
+| `#error` | Stop the build if the dialect is older than C++17 |
+| `#pragma message` | Print the compile-time banner in the log |
+
+Build pipeline to mention: write source → **preprocessor** → compiler → linker → run. FlowDesk’s visible proof is the pragma line, then `./flowdesk`.
 
 ## 4. Compiler (Step 4)
 
-Default is **Clang**. `make gcc` builds the same sources with **GCC**. Both are on the approved list.
+Default is **Clang**. `make gcc` builds the same sources with **GCC**. Both are on the approved list (GCC, Clang, MinGW, Visual C++, …).
+
+```bash
+make        # Clang
+make gcc    # GCC
+```
 
 ## 5. Live demo (Step 5)
 
-Walk every menu item, then leave on **0**.
+Walk every menu item, then leave on **0**. The user can exhaust all options; the programme finishes with `return 0`.
 
 1. **Add** — income, category `Bonus`, any amount.  
 2. **View** — the new row is in the table.  
@@ -48,7 +64,7 @@ Walk every menu item, then leave on **0**.
 6. **Projection** — 12 months, interest off (or on). Read the three columns.  
 7. **Save** — writes `data/ledger.csv`.  
 8. **Load** — reads it back.  
-9. **Help** — version, file path, AI credit.  
+9. **Help** — version, file path, build label.  
 0. **Exit** — “finished with return 0”.
 
 Open another terminal and show:
@@ -79,3 +95,5 @@ after a normal quit. It should print `0`.
 ## If someone asks “what happens with bad input?”
 
 `UI::readInt` and `UI::readDouble` reject anything outside the allowed range and ask again. The programme does not exit until the user chooses 0.
+
+Optional extra (not a brief step): Cursor wrote the code; ChatGPT reviewed the projection bands. See `AI_TOOLS.md`.

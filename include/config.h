@@ -7,7 +7,7 @@
  * compound monthly rate) before they were locked in here.
  *
  * Assignment note: preprocessor directives are applied BEFORE compiling.
- * The Makefile passes -DFLOWDESK_COLOR and -DFLOWDESK_VERSION=...
+ * The Makefile passes -DFLOWDESK_COLOR. Version defaults to 1.0.0.
  */
 
 #ifndef FLOWDESK_CONFIG_H
